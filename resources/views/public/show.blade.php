@@ -21,7 +21,7 @@
 
         <div style="line-height: 1.8; font-size: 1.1em; color: #333;">
             {!! nl2br(e($post->content)) !!}
-            </div>
+        </div>
 
         <hr style="margin-top: 50px; border: 0; border-top: 1px solid #eee;">
 
@@ -29,6 +29,19 @@
             <a href="{{ route('home') }}" class="btn-read" style="background: #6c757d;">&larr; Back to Home</a>
         </div>
 
-    </div>
+        @if($relatedPosts->count() > 0)
+            <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee;">
+                <h3 style="color: #555;">More posts from {{ $post->category->name }}</h3>
+                <ul style="list-style: none; padding: 0;">
+                    @foreach($relatedPosts as $related)
+                        <li style="margin-bottom: 10px;">
+                            <a href="{{ route('post.show', $related->slug) }}" style="text-decoration: none; color: #007bff; font-size: 1.1em;">
+                                &rarr; {{ $related->title }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-@endsection
+    </div> @endsection

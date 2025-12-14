@@ -21,13 +21,18 @@ class PublicController extends Controller
         return view('public.home', compact('recentPosts', 'categories'));
     }
 
-    public function show($slug)
+public function show($slug)
     {
         $post = Post::where('slug', $slug)
                     ->where('status', 'published')
                     ->firstOrFail();
+        $relatedPosts = Post::where('category_id', $post->category_id)
+                        ->where('id', '!=', $post->id)
+                        ->where('status', 'published')
+                        ->take(3)
+                        ->get();
 
-        return view('public.show', compact('post'));
+        return view('public.show', compact('post', 'relatedPosts'));
     }
 
     public function category($slug)
