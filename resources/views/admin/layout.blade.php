@@ -24,7 +24,7 @@
         <h3>Admin Panel</h3>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
         <a href="{{ route('categories.index') }}">Manage Categories</a>
-        <a href="#">Manage Posts</a> <form action="{{ route('logout') }}" method="POST" style="margin-top: 20px;">
+        <a href="{{ route('posts.index') }}">Manage Posts</a>
             @csrf
             <button type="submit" class="btn btn-danger" style="width: 100%;">Logout</button>
         </form>
