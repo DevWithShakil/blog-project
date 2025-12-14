@@ -30,9 +30,14 @@
                     @endif
                 </td>
                 <td>
-                    <a href="#" class="btn btn-edit">Edit</a>
-                    <button class="btn btn-danger">Delete</button>
-                </td>
+    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-edit">Edit</a>
+
+    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure?');">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</td>
             </tr>
             @endforeach
         </tbody>
