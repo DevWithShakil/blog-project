@@ -13,6 +13,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin Routes...
-Route::get('/admin/dashboard', function () {
-    return "Welcome to Admin Dashboard! (Logged in as: " . Auth::user()->name . ")";
-})->middleware('auth');
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::get('/dashboard', function () {
+        return "<h1>Welcome to Admin Dashboard</h1> <p>Logged in as: " . Auth::user()->name . "</p>";
+    })->name('admin.dashboard');
+});
