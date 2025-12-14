@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicController;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,8 +20,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Admin Routes...
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::get('/dashboard', function () {
-        return "<h1>Welcome to Admin Dashboard</h1> <p>Logged in as: " . Auth::user()->name . "</p>";
-    })->name('admin.dashboard');
+    $totalCategories = Category::count();
+    $totalPosts = Post::count();
+    return view('admin.dashboard', compact('totalCategories', 'totalPosts'));
+})->name('admin.dashboard');
 Route::resource('categories', CategoryController::class);
 Route::resource('posts', PostController::class);
 });
