@@ -1,54 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Simple Blog</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: #333; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrail - Premium Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            html { scroll-behavior: smooth; }
+            body { font-family: 'Inter', sans-serif; }
+            h1, h2, h3, .logo-font { font-family: 'Poppins', sans-serif; }
 
-        /* Navbar */
-        nav { background: white; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        nav a { text-decoration: none; color: #333; margin-left: 20px; font-weight: bold; }
-        nav .logo { font-size: 24px; color: #007bff; }
-        nav a:hover { color: #007bff; }
+            .container-custom {
+                @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+            }
 
-        /* Container */
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600;
+            }
 
-        /* Cards */
-        .post-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s; }
-        .post-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .post-meta { font-size: 0.9em; color: #777; margin-bottom: 10px; }
-        .category-badge { background: #eef2ff; color: #007bff; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; text-decoration: none; }
+            .hover-card {
+                @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+            }
 
-        /* Buttons */
-        .btn-read { display: inline-block; margin-top: 10px; padding: 8px 15px; background: #333; color: white; text-decoration: none; border-radius: 4px; }
-        .btn-read:hover { background: #555; }
+            .btn-primary {
+                @apply px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out;
+            }
 
-        /* Category List in Home */
-        .cat-list { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; justify-content: center; }
-        .cat-btn { padding: 10px 20px; background: white; border: 1px solid #ddd; border-radius: 20px; text-decoration: none; color: #333; }
-        .cat-btn:hover { background: #007bff; color: white; border-color: #007bff; }
-
-        .hero { text-align: center; padding: 50px 20px; background: #fff; margin-bottom: 30px; border-radius: 8px; }
+            .badge {
+                @apply inline-block px-3 py-1 text-sm font-medium rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <nav>
-        <a href="{{ route('home') }}" class="logo">MyBlog</a>
-        <div>
-            <a href="{{ route('home') }}">Home</a>
-            @auth
-                <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-            @endauth
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
+        <div class="container-custom py-4 flex justify-between items-center">
+            <a href="{{ route('home') }}" class="logo-font text-2xl font-bold flex items-center space-x-2 group">
+                <span class="text-gradient group-hover:scale-110 transition-transform">TechTrail</span>
+                <div class="h-2 w-2 bg-blue-600 rounded-full animate-pulse"></div>
+            </a>
+
+            <div class="flex items-center space-x-6 font-medium">
+                <a href="{{ route('home') }}" class="relative text-gray-600 hover:text-blue-600 transition duration-300 group py-2">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" class="btn-primary">
+                        Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}" class="btn-primary hidden sm:inline-block">
+                        Sign Up
+                    </a>
+                @endauth
+            </div>
         </div>
     </nav>
 
-    <div class="container">
+    <main class="container-custom py-12">
         @yield('content')
-    </div>
+    </main>
 
-</body>
+    <footer class="bg-white border-t border-gray-100 py-8 mt-12">
+        <div class="container-custom text-center text-gray-500">
+            <p>© {{ date('Y') }} <span class="text-gradient font-bold">TechTrail</span>. Built with Laravel & Tailwind CSS.</p>
+        </div>
+    </footer>
+
+    </body>
 </html>
