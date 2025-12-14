@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,3 +23,9 @@ Route::get('/dashboard', function () {
 Route::resource('categories', CategoryController::class);
 Route::resource('posts', PostController::class);
 });
+
+
+// Public Routes
+Route::get('/', [PublicController::class, 'index'])->name('home');
+Route::get('/blog/{slug}', [PublicController::class, 'show'])->name('post.show');
+Route::get('/category/{slug}', [PublicController::class, 'category'])->name('category.show');
