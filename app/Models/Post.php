@@ -20,6 +20,13 @@ class Post extends Model
         'published_at'
     ];
 
+    protected function casts(): array
+{
+    return [
+        'published_at' => 'datetime',
+    ];
+}
+
     // Relationship: Post belongs to Category
     public function category()
     {
